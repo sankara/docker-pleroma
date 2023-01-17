@@ -11,7 +11,6 @@ run:
 
 setup-dirs:
 	mkdir -p uploads config
-	sudo chown -R 911:911 uploads
 
 setup-postgres-ext:
 	sudo @DB_PASS=$(DB_PASSWORD) @POSTGRES_PASSWORD=$(DB_PASSWORD) docker-compose up -d db
@@ -39,3 +38,6 @@ stop:
 	sudo docker-compose down
 
 bounce: stop run
+
+update-fe:
+	sudo docker exec -i pleroma_web ./bin/pleroma_ctl frontend install soapbox --ref=develop
