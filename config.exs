@@ -9,9 +9,11 @@ config :pleroma, :instance,
   email: System.get_env("ADMIN_EMAIL"),
   notify_email: System.get_env("NOTIFY_EMAIL"),
   limit: 5000,
-  registrations_open: true,
+  registrations_open: false,
   federating: true,
   healthcheck: true
+
+config :pleroma, configurable_from_database: true
 
 config :pleroma, :media_proxy,
   enabled: false,
@@ -32,6 +34,10 @@ config :web_push_encryption, :vapid_details, subject: "mailto:#{System.get_env("
 config :pleroma, :database, rum_enabled: false
 config :pleroma, :instance, static_dir: "/var/lib/pleroma/static"
 config :pleroma, Pleroma.Uploaders.Local, uploads: "/var/lib/pleroma/uploads"
+
+config :pleroma, :frontends,
+  primary: %{"name" => "soapbox", "ref" => "develop"},
+  admin: %{ "name" => "admin", "ref" => "develop"}
 
 # We can't store the secrets in this file, since this is baked into the docker image
 if not File.exists?("/var/lib/pleroma/secret.exs") do
